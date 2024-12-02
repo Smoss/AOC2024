@@ -1,9 +1,8 @@
 import numpy as np
-import pandas as pd
 from numpy import ndarray
 
 
-def load_data(filepath="input", delimiter=" ") -> list[np.array]:
+def load_data(filepath="input", delimiter=" ") -> list[ndarray]:
     try:
         lists = []
         with open(filepath) as input_file:
@@ -19,21 +18,21 @@ def load_data(filepath="input", delimiter=" ") -> list[np.array]:
         raise ValueError(f"Error processing input data: {str(e)}")
 
 
-def check_line(line: np.array) -> bool:
+def check_line(line: ndarray) -> bool:
     diffed = np.ediff1d(line)
     diffed_abs = np.absolute(diffed)
-    return (np.all(diffed > 0) or np.all(diffed < 0)) and \
-            np.all((diffed_abs <= 3) & (diffed_abs >= 1))
+    return bool((np.all(diffed > 0) or np.all(diffed < 0)) and \
+            np.all((diffed_abs <= 3) & (diffed_abs >= 1)))
 
 
-def part_1(matrix: list[np.array]) -> int:
+def part_1(matrix: list[ndarray]) -> int:
     safes = 0
     for line in matrix:
         if check_line(line):
             safes += 1
     return safes
 
-def part_2(matrix: list[np.array]) -> int:
+def part_2(matrix: list[ndarray]) -> int:
     safes = 0
     for line in matrix:
         if check_line(line):
