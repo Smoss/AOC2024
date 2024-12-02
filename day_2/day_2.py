@@ -9,13 +9,10 @@ def load_data(filepath="input", delimiter=" ") -> list[ndarray]:
             for line in input_file.readlines():
                 lists.append(np.array(list(map(int, line.split(" ")))))
         return lists
-        # data = pd.read_csv(filepath, header=None, sep=delimiter)
-        # return (pd.Series(np.sort(data['val_1'])),
-        #         pd.Series(np.sort(data['val_2'])))
-    except FileNotFoundError:
-        raise FileNotFoundError(f"Input file '{filepath}' not found")
+    except FileNotFoundError as err:
+        raise FileNotFoundError(f"Input file '{filepath}' not found") from err
     except Exception as e:
-        raise ValueError(f"Error processing input data: {str(e)}")
+        raise ValueError(f"Error processing input data: {str(e)}") from e
 
 
 def check_line(line: ndarray) -> bool:
@@ -45,10 +42,8 @@ def part_2(matrix: list[ndarray]) -> int:
     return safes
 
 
-input_data = load_data()
-# print(input_data)
-print(part_1(input_data))
-print(part_2(input_data))
-# print(part_1(*input_data))
-# print(part_2(*input_data))
-# Bust the cache
+
+if __name__ == '__main__':
+    input_data = load_data()
+    print(f"Part 1 result: {part_1(input_data)}")
+    print(f"Part 2 result: {part_2(input_data)}")
