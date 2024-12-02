@@ -1,14 +1,16 @@
 import numpy as np
 import pandas as pd
 
-list_1, list_2 = [], []
-with open("input", "r") as input_list:
-    for line in input_list.readlines():
-        val_1, val_2 = line.split("   ")
-        list_1.append(int(val_1))
-        list_2.append(int(val_2))
-np_array_1 = pd.Series(np.sort(list_1))
-np_array_2 = pd.Series(np.sort(list_2))
+def load_data(filepath="input", delimiter="   "):
+    try:
+        data = pd.read_csv(filepath, header=None, sep=delimiter, 
+                          names=['val_1', 'val_2'])
+        return (pd.Series(np.sort(data['val_1'])), 
+                pd.Series(np.sort(data['val_2'])))
+    except FileNotFoundError:
+        raise FileNotFoundError(f"Input file '{filepath}' not found")
+    except Exception as e:
+        raise ValueError(f"Error processing input data: {str(e)}")
 
 def part_1():
     return  np.sum(np.absolute(np_array_1 - np_array_2))
