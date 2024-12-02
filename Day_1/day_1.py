@@ -32,3 +32,4 @@ def part_2(array1: pd.Series, array2: pd.Series) -> float:
 input_data = load_data()
 print(part_1(*input_data))
 print(part_2(*input_data))
+# Bust the cache
