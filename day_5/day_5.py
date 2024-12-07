@@ -1,4 +1,3 @@
-import re
 from collections import defaultdict
 
 digits = list(map(str, range(0, 10)))
